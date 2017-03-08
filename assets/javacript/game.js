@@ -39,10 +39,10 @@ var updateguesssedSoFar = function(){
 
     updateguessesLeft();
     updatenextLetter();
-//When a user clicks on a letter the guessesLeft should 
+//When a user clicks on a letter the guessesLeft should
     document.onkeyup = function() {
       guessesLeft --;
-      var userGuess = string.letters(event.keyCode).toLowerCase();
+      var userGuess = string.guessedLetters(event.keyCode).toLowerCase();
 
       guessedLetters.push(userGuess);
       updateguessesLeft();
