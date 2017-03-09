@@ -8,62 +8,76 @@ var guessesLeft = 9;
 var guessedLetters = [];
 var lettersToGuess = null;
 
+window.onload= function() {
+  wins = 0;
+  document.getElementById('wins').innerHTML= wins;
+  console.log(wins);
+  losses = 0;
+  document.getElementById('losses').innerHTML = losses;
+  console.log(losses);
 
-var userGuess = letters[Math.floor(Math.random() * letters.length)];
+  document.getElementById('guessesLeft').innerHTML = guessesLeft;
+  console.log(guessesLeft);
 
-var updateguessesLeft = function () {
+  document.getElementById('soFar').innerHTML = guessedLetters;
+}
 
-  document.getElementById('#guessleft').innerHtml = "Guesses Left " + guessesLeft;
+
+var computerGuess = letters[Math.floor(Math.random() * letters.length)];
+console.log(computerGuess);
 
 
-var updatenextLetter = function(){
-
-  this.lettersToGuess = this.letters[Math.floor(Math.random() * this.letters.length)];
-
-};
 //updating the guesses so far to display the letters that have been guessed in the format of [a,d,s,g,h]
 var updateguesssedSoFar = function(){
-  document.getElementById('#sofar').innerHtml = " Your Guesses so far" + guessedLetters.join(',')
+  document.getElementById('soFar').innerHTML = " Your Guesses so far" + guessedLetters.join(',')
 
 };
 //
-  var reset = function(){
-    guesses = 9;
-    guessesLeft = 9;
-    guessedLetters =[];
 
-    updateguesssedSoFar();
-    updatenextLetter();
-    updateguessesLeft();
-  }
 
-    updateguessesLeft();
-    updatenextLetter();
+
+
 //When a user clicks on a letter the guessesLeft should
-    document.onkeyup = function() {
-      guessesLeft --;
-      var userGuess = string.guessedLetters(event.keyCode).toLowerCase();
+    document.onkeyup = function(event) {
+      var userGuess = event.key;
+      console.log(userGuess);
 
-      guessedLetters.push(userGuess);
-      updateguessesLeft();
-      updateguesssedSoFar();
+      guessedLetters.push(" " + userGuess);
+      document.getElementById('soFar').innerHTML = guessedLetters;
+
+      if (userGuess === computerGuess){
+        wins++;
+        document.getElementById('wins').innerHTML = wins;
+        guessesLeft = 9;
+        document.getElementById('guessesLeft').innerHTML = guessesLeft;
+        guessedLetters=[];
+        document.getElementById('soFar').innerHTML =guessedLetters;
+        computerGuess =letters[Math.floor(Math.random() * letters.length)];
+        console.log(computerGuess);
+
+      }
+
+          else if (userGuess !== computerGuess) {
+              guessesLeft --;
+              document.getElementById('guessesLeft').innerHTML = guessesLeft;
 
 
-          if (guessesLeft > 0) {
-              if (userGuess === lettersToGuess) {
-                  wins++;
-                  document.getElementById('#wins').innerHtml = "Wins: " + wins;
-                  reset();
 
-              }
-
-            }else if (guessesLeft == 0) {
+            if (guessesLeft == 0) {
               losses ++;
-              document.getElementById('#losses').innerHtml = "Losses " + losses;
-              reset();
+              document.getElementById('losses').innerHTML =  losses;
+              guessesLeft = 9;
+              document.getElementById('guessesLeft').innerHTML = guessesLeft;
+              guessedLetters=[];
+              document.getElementById('soFar').innerHTML =guessedLetters;
+              computerGuess =letters[Math.floor(Math.random() * letters.length)];
+              console.log(computerGuess);
+
+
+
 
             }
 
           }
+
     }
-})
